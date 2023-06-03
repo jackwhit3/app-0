@@ -1,6 +1,9 @@
 # syntax=docker/dockerfile:1
 
-FROM ubuntu:22.04
-RUN apt update -y
-RUN apt install -y python3.11 pip
-WORKDIR /home/
+FROM python:alpine3.17
+WORKDIR /src/
+ADD requirements.txt .
+RUN pip install -r requirements.txt
+COPY . .
+CMD ["./app0/manage.py", "runserver", "0.0.0.0:8080"]
+EXPOSE 8080
